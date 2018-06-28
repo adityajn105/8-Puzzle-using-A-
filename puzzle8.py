@@ -10,7 +10,6 @@ class Puzzle(object):
 			self.board=self.generateRandomboard()
 		else:
 			self.board=board
-		self.ans = [1,2,3,4,5,6,7,8,' ']
 		self.moves=moves
 		self.previous=previous
 
@@ -59,7 +58,7 @@ class Puzzle(object):
 
 	def isSolution(self):
 		"return True if current board is goal"
-		return self.board==self.ans
+		return self.board==[1,2,3,4,5,6,7,8,' ']
 
 	def manhattendistance(self):
 		dist = 0
