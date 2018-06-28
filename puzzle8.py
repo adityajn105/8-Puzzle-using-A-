@@ -5,7 +5,7 @@ import time
 
 
 class Puzzle(object):
-	def __init__(self,board=None,moves=0,previous=None):\
+	def __init__(self,board=None,moves=0,previous=None):
 		"""
 			Heuristic = manhattendistance + moves
 		"""
@@ -179,7 +179,7 @@ class Puzzle(object):
 
 
 
-		        	Press \u21b3 (ENTER Key) to Exit
+		        	Press \u21b3 (ENTER Key) to start new Puzzle
 
 
 
@@ -259,7 +259,7 @@ def automate(board,window):
 				path.append(prev)
 				prev = prev.previous
 			break
-			
+
 	path.reverse()
 	for board in path:
 		window.clear()
@@ -272,7 +272,7 @@ def automate(board,window):
 	window.getch()
 
 def initialize(window):
-	board = Puzzle([1,2,3,4,5,6,' ',8,7])
+	board = Puzzle()
 	window.insstr(0, 0, str(board))
 	window.insstr(18,0,board.printControls())
 	ch = window.getch()
@@ -318,17 +318,18 @@ def initialize(window):
 			window.refresh()
 			time.sleep(1)
 			automate(board,window)
-			board = Puzzle(None)
+			board = Puzzle()
 
 		window.clear()
 		if board.isSolution():
 			window.insstr(0,0,board.getvictorySign())
+			window.getch()
+			board = Puzzle()
 		else:
 			window.insstr(0, 0, str(board))
 			window.insstr(18, 0, board.printControls())
-		ch = window.getch()
+			ch = window.getch()
 		window.refresh()
-
 
 if __name__=='__main__':
 	curses.wrapper(initialize)
