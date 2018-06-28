@@ -5,4 +5,4 @@
 2. Manual play included
 3. Detection of Non Solvable Puzzles
 4. Heuristic = manhatten distance + moves
-5. Comments included
+5. Comments included explaining each function

@@ -5,7 +5,10 @@ import time
 
 
 class Puzzle(object):
-	def __init__(self,board=None,moves=0,previous=None):
+	def __init__(self,board=None,moves=0,previous=None):\
+		"""
+			Heuristic = manhattendistance + moves
+		"""
 		if board==None:
 			self.board=self.generateRandomboard()
 		else:
@@ -50,17 +53,23 @@ class Puzzle(object):
 
 	def __eq__(self,other):
 		"""
-			check equality of self with other
+			check equality of self with other board
 		"""
 		if other==None:
 			return False
 		return self.board==other.board
 
 	def isSolution(self):
-		"return True if current board is goal"
+		"""
+		return True if current board is goal
+		"""
 		return self.board==[1,2,3,4,5,6,7,8,' ']
 
 	def manhattendistance(self):
+		"""
+			return difference of cols and rows of curr and goal pos of all tiles
+			this is called manhatten distance
+		"""
 		dist = 0
 		for i in range(0,9):
 			if self.board[i] == " ":
@@ -75,10 +84,8 @@ class Puzzle(object):
 
 	def move_tile(self,directn):
 		"""
-			1 2 3
-			4 5 6
-			7 8 9
-
+			call exchange tile if exchange is possible
+			do nothing if not possible
 		"""
 		pos_blank = self.find_blank()
 
@@ -96,18 +103,34 @@ class Puzzle(object):
 				self.exchange(pos_blank-1,pos_blank+2)
 
 	def exchange(self,i,j):
+		"""
+			exchange tiles
+		"""
 		self.board[i],self.board[j] = self.board[j],self.board[i]
 
 	def find_blank(self):
+		"""
+			return position of blank tile
+		"""
 		for i in range(0,9):
 			if self.board[i]==" ":
 				return i+1
 
 	def clone(self):
+		"""
+			return new puzzle with board same as curr board
+			increament in move
+			previous is same as curr board
+			this is used before moving a tile
+		"""
 		return Puzzle(board = self.board.copy(),moves=self.moves+1,previous=self)
 
 
 	def getNeighbors(self):
+		"""
+			make all possible moves in curr board
+			and return it in a array
+		"""
 		neighbors = []
 		pos_blank = self.find_blank()
 
@@ -202,6 +225,8 @@ class Puzzle(object):
 
 def automate(board,window):
 	queue = PriorityQueue()
+
+	#odd inversion is not solvable
 	if board.totalInversions()%2==1:
 		window.clear()
 		window.insstr(0,0,
@@ -234,7 +259,7 @@ def automate(board,window):
 				path.append(prev)
 				prev = prev.previous
 			break
-
+			
 	path.reverse()
 	for board in path:
 		window.clear()
