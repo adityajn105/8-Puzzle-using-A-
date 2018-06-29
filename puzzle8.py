@@ -88,7 +88,6 @@ class Puzzle(object):
 			do nothing if not possible
 		"""
 		pos_blank = self.find_blank()
-
 		if directn=="up":
 			if pos_blank > 3:
 				self.exchange(pos_blank-1,pos_blank-4)
@@ -105,8 +104,10 @@ class Puzzle(object):
 	def exchange(self,i,j):
 		"""
 			exchange tiles
+			and increase move by 1
 		"""
 		self.board[i],self.board[j] = self.board[j],self.board[i]
+		self.moves+=1
 
 	def find_blank(self):
 		"""
@@ -119,11 +120,11 @@ class Puzzle(object):
 	def clone(self):
 		"""
 			return new puzzle with board same as curr board
-			increament in move
+			keep move as same
 			previous is same as curr board
 			this is used before moving a tile
 		"""
-		return Puzzle(board = self.board.copy(),moves=self.moves+1,previous=self)
+		return Puzzle(board = self.board.copy(),moves=self.moves,previous=self)
 
 
 	def getNeighbors(self):
@@ -133,7 +134,6 @@ class Puzzle(object):
 		"""
 		neighbors = []
 		pos_blank = self.find_blank()
-
 		if pos_blank > 3:
 			new_board = self.clone()
 			new_board.move_tile("up")
@@ -153,9 +153,7 @@ class Puzzle(object):
 			new_board = self.clone()
 			new_board.move_tile("down")
 			neighbors.append(new_board)
-
 		return neighbors
-
 
 	def getvictorySign(self):
 		return """
@@ -225,7 +223,7 @@ class Puzzle(object):
 
 def automate(board,window):
 	queue = PriorityQueue()
-
+	
 	#odd inversion is not solvable
 	if board.totalInversions()%2==1:
 		window.clear()
@@ -240,9 +238,7 @@ def automate(board,window):
 		time.sleep(1)
 		window.getch()
 		return 
-
 	queue.put(board.in_priority_queue(0))
-
 	path = []
 	i=1
 	while not queue.empty():
@@ -279,16 +275,12 @@ def initialize(window):
 	while str(ch)!='10':
 		if ch==curses.KEY_UP:
 			board.move_tile("up");
-			board.moves+=1
 		elif ch==curses.KEY_DOWN:
 			board.move_tile("down")
-			board.moves+=1
 		elif ch==curses.KEY_LEFT:
 			board.move_tile("left")
-			board.moves+=1
 		elif ch==curses.KEY_RIGHT:
 			board.move_tile("right")
-			board.moves+=1
 		elif ch==ord("n"):
 			board =Puzzle(None)
 		elif ch == ord("x"):
