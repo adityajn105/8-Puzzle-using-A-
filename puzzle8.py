@@ -1,3 +1,7 @@
+"""
+Author: Aditya Jain
+Contact: adityajn105@gmail.com
+"""
 from random import shuffle
 from queue import PriorityQueue
 import curses
@@ -215,8 +219,8 @@ class Puzzle(object):
 	def in_priority_queue(self,count):
 		"""
 		count is used in case 1st entry of tuple is equal
-		priorityqueue uses 2nd entry of tuple in case 1st entry is equal
-		third entry is puzzle which cant be compared
+		priorityqueue uses 2nd entry of tuple to sort, in case 1st entry is equal
+		third entry in tuple can't be compared to sort entries thats why we are using count
 		"""
 		return (self.manhattendistance()+self.moves,count,self)
 
